@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hello
-        image: dockerfabric/hello:latest
+        image: ozanoguz/hello:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
