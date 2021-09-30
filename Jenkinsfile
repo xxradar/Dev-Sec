@@ -16,7 +16,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("ozanoguz/hello:${env.BUILD_ID}")
+                    myapp = docker.build("dockerfabric/hello:${env.BUILD_ID}")
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                      try {
-                        fortiCWPScanner block: true, imageName: "ozanoguz/hello:${env.BUILD_ID}"
+                        fortiCWPScanner block: true, imageName: "dockerfabric/hello:${env.BUILD_ID}"
                         } catch (Exception e) {
     
                  echo "Request for Approval"  
