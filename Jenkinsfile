@@ -1,23 +1,30 @@
 pipeline {
     agent any
     stages {
-        stage("Checkout code") {
+        stage("Checkout sourcecode") {
             steps {
-                checkout scm      
+                checkout scm
+                
             }
+        }
+        stage("FortiDevSec SAST Scanner-") {
+            steps {
+sh 'docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
+   sh 'docker run --rm --mount type=bind,source=/var/lib/jenkins/workspace/FortiCWP_FortiDevSec_Demo,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
+              }
         }
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("latest/hello:${env.BUILD_ID}")
+                    myapp = docker.build("ozanoguz/hello:${env.BUILD_ID}")
                 }
             }
         }
-        stage("FortiCWP Image Scan") {
+        stage("FortiCWP Image Scanner") {
             steps {
                 script {
                      try {
-                        fortiCWPScanner block: true, imageName: "dockerfabric/hello:${env.BUILD_ID}"
+                        fortiCWPScanner block: true, imageName: "ozanoguz/hello:${env.BUILD_ID}"
                         } catch (Exception e) {
     
                  echo "Request for Approval"  
@@ -33,7 +40,7 @@ pipeline {
               }
             }
           }
-        stage("Push image") {
+        stage("Push image to DockerHub") {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
@@ -43,7 +50,11 @@ pipeline {
                 }
             }
         }        
-      
+        stage('Deploy to GKE') {
+            steps{
+                sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+            }
         }
     }    
 }
