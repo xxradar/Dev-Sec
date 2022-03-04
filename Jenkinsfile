@@ -1,11 +1,6 @@
 pipeline {
     agent any
-    environment {
-        PROJECT_ID = 'forti-emea-se'
-        CLUSTER_NAME = 'hk-cwp-gke'
-        LOCATION = 'us-central1-c'
-        CREDENTIALS_ID = 'forti-emea-se'
-    }
+  
     stages {
         stage("Checkout code") {
             steps {
