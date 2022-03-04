@@ -1,30 +1,29 @@
-pipeline {
+ipeline {
     agent any
+    environment {
+        PROJECT_ID = 'forti-emea-se'
+        CLUSTER_NAME = 'hk-cwp-gke'
+        LOCATION = 'us-central1-c'
+        CREDENTIALS_ID = 'forti-emea-se'
+    }
     stages {
-        stage("Checkout sourcecode") {
+        stage("Checkout code") {
             steps {
-                checkout scm
-                
+                checkout scm      
             }
-        }
-        stage("FortiDevSec SAST Scanner-") {
-            steps {
-sh 'docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
-   sh 'docker run --rm --mount type=bind,source=/var/lib/jenkins/workspace/FortiCWP_FortiDevSec_Demo,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
-              }
         }
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("ozanoguz/hello:${env.BUILD_ID}")
+                    myapp = docker.build("dockerfabric/hello:${env.BUILD_ID}")
                 }
             }
         }
-        stage("FortiCWP Image Scanner") {
+        stage("FortiCWP Image Scan") {
             steps {
                 script {
                      try {
-                        fortiCWPScanner block: true, imageName: "ozanoguz/hello:${env.BUILD_ID}"
+                        fortiCWPScanner block: true, imageName: "dockerfabric/hello:${env.BUILD_ID}"
                         } catch (Exception e) {
     
                  echo "Request for Approval"  
@@ -40,7 +39,7 @@ sh 'docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
               }
             }
           }
-        stage("Push image to DockerHub") {
+        stage("Push image") {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
