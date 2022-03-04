@@ -9,7 +9,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("nginx:${env.BUILD_ID}")
+                    myapp = docker.build("latest/hello:${env.BUILD_ID}")
                 }
             }
         }
