@@ -4,7 +4,7 @@ pipeline {
 		DOCKERHUB_CREDENTIALS=credentials('git')
 	     registry = "dockerfabric/hello-world" 
         registryCredential = 'git' 
-        dockerImage = '' 
+        dockerImage = 'hello-world' 
 	}
     stages {
         stage("Checkout sourcecode") {
