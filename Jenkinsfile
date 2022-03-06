@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-	    registry = "dockerfabric/hkcwp"
+	    registry = "dockerfabric/hello-world"
             registryCredential = 'dockerfabric-dockerhub'
             dockerImage = ''
     }
@@ -14,7 +14,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("dockerfabric/hkcwp:${env.BUILD_ID}")
+                    myapp = docker.build("dockerfabric/hello-world:${env.BUILD_ID}")
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                      try {
-                        fortiCWPScanner block: true, imageName: "dockerfabric/hkcwp:${env.BUILD_ID}"
+                        fortiCWPScanner block: true, imageName: "dockerfabric/hello-world:${env.BUILD_ID}"
                         } catch (Exception e) {
     
                  echo "Request for Approval"  
