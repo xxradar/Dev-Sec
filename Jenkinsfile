@@ -2,6 +2,9 @@ pipeline {
     agent any
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('git')
+	     registry = "dockerfabric/hello-world" 
+        registryCredential = 'git' 
+        dockerImage = '' 
 	}
     stages {
         stage("Checkout sourcecode") {
