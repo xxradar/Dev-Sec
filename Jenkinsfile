@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        registry = "dockerfabric/hello-world"
+        registry = "dockerfabric/hello-world:latest"
         registryCredential = 'dockerfabric-dockerhub'
         dockerImage = ''
     }
@@ -14,7 +14,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("dockerfabric/hello-world:${env.BUILD_ID}")
+                    myapp = docker.build("dockerfabric/hello-world:latest:${env.BUILD_ID}")
                 }
             }
         }
