@@ -16,13 +16,7 @@ pipeline {
 sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
               }
         }
-        stage("Push image") {
-            steps {
-                script {
-                    myapp = docker.push("dockerfabric / hkcwp:${env.BUILD_ID}")
-                }
-            }
-        }
+        
         stage("FortiCWP Image Scanner") {
             steps {
                 script {
@@ -32,6 +26,14 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
     
                  echo "Request for Approval"  
                   }
+                }
+            }
+        }
+	    
+	    stage("Push image") {
+            steps {
+                script {
+                    myapp = docker.push("dockerfabric / hkcwp:${env.BUILD_ID}")
                 }
             }
         }
