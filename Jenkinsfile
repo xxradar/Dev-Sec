@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+        registry = "dockerfabric/hello-world:latest"
     }
     stages {
         stage("Checkout code") {
