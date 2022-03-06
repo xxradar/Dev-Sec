@@ -10,7 +10,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("dockerfabric/hello:${env.BUILD_ID}")
+                     docker run hello-world
                 }
             }
         }
