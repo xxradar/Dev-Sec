@@ -15,7 +15,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("dockerfabric/hello-world:${env.BUILD_ID}")
+                    myapp = docker.build("dockerfabric-dockerhub/hello-world:${env.BUILD_ID}")
                 }
             }
         }
@@ -23,7 +23,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
             steps {
                 script {
                      try {
-                        fortiCWPScanner block: true, imageName: "dockerfabric/hello-world:${env.BUILD_ID}"
+                        fortiCWPScanner block: true, imageName: "dockerfabric-dockerhub/hello-world:${env.BUILD_ID}"
                         } catch (Exception e) {
     
                  echo "Request for Approval"  
