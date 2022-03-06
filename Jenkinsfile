@@ -3,7 +3,7 @@ pipeline {
     environment {
 	registry = "dockerfabric/hello-world" 
         registryCredential = 'jenkins' 
-        dockerImage = 'hello-world' 
+        dockerImage = 'hk' 
 	}
     stages {
         stage("Checkout sourcecode") {
@@ -16,10 +16,10 @@ pipeline {
 sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
               }
         }
-        stage("Pull image") {
+        stage("Push image") {
             steps {
                 script {
-                    myapp = docker.pull("dockerfabric/hello-world:${env.BUILD_ID}")
+                    myapp = docker.push("dockerfabric/hello:${env.BUILD_ID}")
                 }
             }
         }
