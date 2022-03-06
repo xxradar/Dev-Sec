@@ -9,8 +9,7 @@ pipeline {
         }
         stage("FortiDevSec SAST Scanner-") {
             steps {
-'docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
-   'docker run --rm --mount type=bind,source=/var/lib/jenkins/workspace/FortiCWP_FortiDevSec_Demo,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
+sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
               }
         }
         stage("Build image") {
