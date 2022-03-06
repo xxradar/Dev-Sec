@@ -1,22 +1,32 @@
-pipeline {
+ppipeline {
     agent any
-    environment {
-        registry = "dockerfabric/hello-world:latest"
-        registryCredential = 'dockerfabric-dockerhub'
-        
-    }
+
     stages {
-        stage("Checkout code") {
+        stage('Build') {
             steps {
-                checkout scm      
+                echo 'Building..'
             }
         }
-        stage("Build image") {
+        stage('Test') {
             steps {
-                script {
-                    myapp = docker.build("dockerfabric/hello:${env.BUILD_ID}")
-                }
+                echo 'Testing..'
             }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
+
+stage("FortiDevSec SAST Scanner-") {
+            steps {
+sh 'docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
+   sh 'docker run --rm --mount type=bind,source=/var/lib/jenkins/workspace/FortiCWP_FortiDevSec_Demo,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
+              }
+        }
+
         }
         stage("FortiCWP Image Scan") {
             steps {
