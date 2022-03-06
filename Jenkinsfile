@@ -4,9 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
                 script {
-                    myapp = docker.build("deployment.yaml:${env.BUILD_ID}")
+                    myapp = docker.build("dockerfabric/hkcwp:${env.BUILD_ID}")
                 }
             }
         }
