@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
 	registry = "dockerfabric/hello-world" 
-        registryCredential = 'git' 
+        registryCredential = 'jenkins' 
         dockerImage = 'hello-world' 
 	}
     stages {
