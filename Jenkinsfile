@@ -1,6 +1,8 @@
 pipeline {
     agent any
     environment {
+        registry = "dockerfabric/hello-world"
+        registryCredential = 'dockerfabric-dockerhub'
     }
     stages {
         stage("Checkout code") {
