@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerfabric-dockerhub')
+		DOCKERHUB_CREDENTIALS=credentials('git')
 	}
     stages {
         stage("Checkout sourcecode") {
