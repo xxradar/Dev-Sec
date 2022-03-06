@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 script {
-                    myapp = docker.build("ozanoguz/hello:${env.BUILD_ID}")
+                    myapp = docker.build("deployment.yaml:${env.BUILD_ID}")
                 }
             }
         }
