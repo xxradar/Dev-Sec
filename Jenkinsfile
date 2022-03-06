@@ -32,3 +32,4 @@ sh 'docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
         }
     }
 }
+}
