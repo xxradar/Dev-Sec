@@ -16,10 +16,10 @@ pipeline {
 sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
               }
         }
-        stage("Build image") {
+        stage("Pull image") {
             steps {
                 script {
-                    myapp = docker.build("dockerfabric/hello-world:${env.BUILD_ID}")
+                    myapp = docker.pull("dockerfabric/hello-world:${env.BUILD_ID}")
                 }
             }
         }
