@@ -6,18 +6,11 @@ pipeline {
         registryCredential = 'git' 
         dockerImage = '' 
 	}
-	
-	 stages { 
-         stage('Cloning our Git') { 
-         steps { 
-          git 'https://github.com/dockerfabric/https://github.com/hkebbi/Dev-Sec.git' 
-            }
-        } 
     stages {
         stage("Checkout sourcecode") {
             steps {
                 checkout scm
-                
+		git clone 'https://github.com/dockerfabric/https://github.com/hkebbi/Dev-Sec.git' 
             }
         }
         stage("FortiDevSec SAST Scanner-") {
