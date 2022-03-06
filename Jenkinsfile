@@ -1,20 +1,29 @@
 pipeline {
     agent any
     environment {
-        registry = "dockerfabric/hello-world:latest"
-        registryCredential = 'dockerfabric-dockerhub'
-        dockerImage = ''
     }
     stages {
         stage("Checkout code") {
             steps {
-                checkout scm   
+                checkout scm      
             }
         }
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("dockerfabric/hello-world:latest:${env.BUILD_ID}")
+                    myapp = docker.build("dockerfabric/hello:${env.BUILD_ID}")
+                }
+            }
+        }
+        stage("FortiCWP Image Scan") {
+            steps {
+                script {
+                     try {
+                        fortiCWPScanner block: true, imageName: "dockerfabric/hello:${env.BUILD_ID}"
+                        } catch (Exception e) {
+    
+                 echo "Request for Approval"  
+                  }
                 }
             }
         }
@@ -36,6 +45,11 @@ pipeline {
                 }
             }
         }        
+        stage('Deploy to GKE') {
+            steps{
+                sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+            }
         }
     }    
 }
