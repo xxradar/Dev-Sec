@@ -5,6 +5,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                script {
+                    myapp = docker.build("ozanoguz/hello:${env.BUILD_ID}")
+                }
             }
         }
         stage('Test') {
