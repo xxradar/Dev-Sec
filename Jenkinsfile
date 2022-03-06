@@ -1,8 +1,7 @@
 pipeline {
     agent any
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('git')
-	     registry = "dockerfabric/hello-world" 
+	registry = "dockerfabric/hello-world" 
         registryCredential = 'git' 
         dockerImage = 'hello-world' 
 	}
