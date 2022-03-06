@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-	registry = "dockerfabric/hello-world" 
+	registry = "dockerfabric / hkcwp" 
         registryCredential = 'jenkins' 
         dockerImage = 'hk' 
 	}
@@ -19,7 +19,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
         stage("Push image") {
             steps {
                 script {
-                    myapp = docker.push("dockerfabric/hello:${env.BUILD_ID}")
+                    myapp = docker.push("dockerfabric / hkcwp:${env.BUILD_ID}")
                 }
             }
         }
@@ -27,7 +27,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
             steps {
                 script {
                      try {
-                        fortiCWPScanner block: true, imageName: "dockerfabric/hello-world:${env.BUILD_ID}"
+                        fortiCWPScanner block: true, imageName: "dockerfabric / hkcwp:${env.BUILD_ID}"
                         } catch (Exception e) {
     
                  echo "Request for Approval"  
@@ -46,14 +46,14 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
         stage("Push image to DockerHub") {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerfabric') {
                             myapp.push("latest")
                             myapp.push("${env.BUILD_ID}")
                     }
                 }
             }
         }        
-        stage('Deploy to GKE') {
+        stage('Deploy to AWS Kubernetes') {
             steps{
                 sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
