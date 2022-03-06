@@ -3,6 +3,7 @@ pipeline {
     environment {
         registry = "dockerfabric/hello-world"
         registryCredential = 'dockerfabric-dockerhub'
+        dockerImage = ''
     }
     stages {
         stage("Checkout code") {
