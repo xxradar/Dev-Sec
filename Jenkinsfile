@@ -6,6 +6,13 @@ pipeline {
         registryCredential = 'git' 
         dockerImage = '' 
 	}
+	
+	 stages { 
+         stage('Cloning our Git') { 
+         steps { 
+          git 'https://github.com/dockerfabric/https://github.com/hkebbi/Dev-Sec.git' 
+            }
+        } 
     stages {
         stage("Checkout sourcecode") {
             steps {
