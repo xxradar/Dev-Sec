@@ -17,7 +17,14 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
               }
         }
         
-        stage("FortiCWP Image Scanner") {
+  	    stage("Push image") {
+            steps {
+                script {
+                    myapp = docker.push("dockerfabric / hkcwp:${env.BUILD_ID}")
+                }
+            }
+        }
+	    stage("FortiCWP Image Scanner") {
             steps {
                 script {
                      try {
@@ -30,13 +37,6 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
             }
         }
 	    
-	    stage("Push image") {
-            steps {
-                script {
-                    myapp = docker.push("dockerfabric / hkcwp:${env.BUILD_ID}")
-                }
-            }
-        }
              stage('Code approval request') {
      
            steps {
