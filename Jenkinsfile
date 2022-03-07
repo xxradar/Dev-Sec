@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-	registry = "dockerfabric / hkcwp" 
+	registry = "dockerfabric/helloworld" 
         registryCredential = 'jenkins' 
-        dockerImage = 'hk' 
+        dockerImage = '' 
 	}
     stages {
         stage("Checkout sourcecode") {
@@ -16,19 +16,18 @@ pipeline {
 sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
               }
         }
-        
-  	    stage("Push image") {
+        stage("Build image") {
             steps {
                 script {
-                    myapp = docker.push("dockerfabric / hkcwp:${env.BUILD_ID}")
+                    myapp = docker.build("dockerfabric/helloworld:${env.BUILD_ID}")
                 }
             }
         }
-	    stage("FortiCWP Image Scanner") {
+        stage("FortiCWP Image Scanner") {
             steps {
                 script {
                      try {
-                        fortiCWPScanner block: true, imageName: "dockerfabric / hkcwp:${env.BUILD_ID}"
+                        fortiCWPScanner block: true, imageName: "dockerfabric/helloworld:${env.BUILD_ID}"
                         } catch (Exception e) {
     
                  echo "Request for Approval"  
@@ -36,7 +35,6 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
                 }
             }
         }
-	    
              stage('Code approval request') {
      
            steps {
@@ -48,14 +46,14 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
         stage("Push image to DockerHub") {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerfabric') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                             myapp.push("latest")
                             myapp.push("${env.BUILD_ID}")
                     }
                 }
             }
         }        
-        stage('Deploy to AWS Kubernetes') {
+        stage('Deploy to GKE') {
             steps{
                 sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
