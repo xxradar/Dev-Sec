@@ -46,7 +46,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
         stage("Push image to DockerHub") {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerfabric') {
                             myapp.push("latest")
                             myapp.push("${env.BUILD_ID}")
                     }
