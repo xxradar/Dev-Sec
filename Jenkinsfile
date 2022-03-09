@@ -53,10 +53,8 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
                 }
             }
         }        
-        stage('Deploy to AWS') {
-            steps{
-                sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
-            }
-        }
+       stage("kubernetes deployment"){
+  sh 'kubectl apply -f deployment.yml'
+}
     }    
 }
