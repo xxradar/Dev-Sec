@@ -55,7 +55,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
         }        
        stage("kubernetes deployment"){
 	       credentialsId:uniquename
-  sh 'kubectl apply -f deployment.yml'
+  sh 'kubectl apply -f deployment.yaml'
 }
     }    
 }
