@@ -56,7 +56,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
        stage('Deploy App') {
       steps {
         script {
-          kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "uniquename")
+          kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "testphillippe")
         }
       }
     }
