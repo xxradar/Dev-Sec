@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hello
-        image: dockerfabric/helloworld:latest
+        image: dockerfabric/helloworld
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
