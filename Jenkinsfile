@@ -47,7 +47,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
 	    stage('Deploy Docker Image Locally') {
                 steps {
                  sh '''#!/bin/bash
-	            docker run -d dockerfabric/helloworld:${env.BUILD_ID}
+	            docker run -d "dockerfabric/helloworld:${env.BUILD_ID}"
 		    docker ps -a
                  '''
     }
