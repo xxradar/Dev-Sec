@@ -61,6 +61,7 @@ docker run -i --rm --mount type=bind,source="$(pwd)",target=/scan registry.forti
 sh '''#!/bin/bash
 docker pull registry.fortidevsec.forticloud.com/fdevsec_dast:latest
 docker run -i --rm --mount type=bind,source="$(pwd)",target=/scan registry.fortidevsec.forticloud.com/fdevsec_dast:latest
+docker stop helloserver
 docker rm helloserver
 '''    
               }
