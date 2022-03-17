@@ -60,7 +60,7 @@ docker run -i --rm --mount type=bind,source="$(pwd)",target=/scan registry.forti
             steps {
 sh '''#!/bin/bash
 docker pull registry.fortidevsec.forticloud.com/fdevsec_dast:latest
-docker run –rm –mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_dast:latest
+docker run -i --rm --mount type=bind,source="$(pwd)",target=/scan registry.fortidevsec.forticloud.com/fdevsec_dast:latest
 '''
               }
         }
