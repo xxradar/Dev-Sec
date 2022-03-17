@@ -53,6 +53,11 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
                  '''
     }
 }
+	     stage("FortiDevSec DAST Scanner-") {
+            steps {
+sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_dast:latest'
+              }
+        }
 	    
         stage("Push image to DockerHub") {
             steps {
