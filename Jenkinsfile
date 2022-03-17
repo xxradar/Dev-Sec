@@ -56,7 +56,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
       stage('Setting the variables values') {
            steps {
             sh '''#!/bin/bash
-                 echo "hello world" 
+                 kubectl apply -f deployment.yaml
             '''
     }
 }
