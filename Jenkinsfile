@@ -51,7 +51,7 @@ docker run -i --rm --mount type=bind,source="$(pwd)",target=/scan registry.forti
                 steps {
                  sh '''#!/bin/bash
 	            env
-		    docker run -d "dockerfabric/helloworld:${BUILD_ID}"
+		    docker run -d --name helloserver -p 5000:5000 "dockerfabric/helloworld:${BUILD_ID}"
 		    docker ps -a
                  '''
     }
@@ -61,7 +61,8 @@ docker run -i --rm --mount type=bind,source="$(pwd)",target=/scan registry.forti
 sh '''#!/bin/bash
 docker pull registry.fortidevsec.forticloud.com/fdevsec_dast:latest
 docker run -i --rm --mount type=bind,source="$(pwd)",target=/scan registry.fortidevsec.forticloud.com/fdevsec_dast:latest
-'''
+docker rm helloserver
+'''    
               }
         }
 	    
