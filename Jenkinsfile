@@ -43,6 +43,16 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
               }
             }
           }
+	     
+	    stage('Deploy Docker Image Locally') {
+                steps {
+                 sh '''#!/bin/bash
+	            docker run -d dockerfabric/helloworld:${env.BUILD_ID}
+		    docker ps -a
+                 '''
+    }
+}
+	    
         stage("Push image to DockerHub") {
             steps {
                 script {
@@ -53,7 +63,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
                 }
             }
         }        
-      stage('Setting the variables values') {
+      stage('Deploy to Self-Managed Kubernetes') {
            steps {
             sh '''#!/bin/bash
 	        export KUBECONFIG=/home/my_jenkins_home/.kube/config
