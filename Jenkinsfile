@@ -13,7 +13,10 @@ pipeline {
         }
         stage("FortiDevSec SAST Scanner-") {
             steps {
-sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
+sh '''#!/bin/bash
+docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
+docker run –rm –mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest
+'''
               }
         }
         stage("Build image") {
@@ -55,7 +58,10 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
 }
 	     stage("FortiDevSec DAST Scanner-") {
             steps {
-sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_dast:latest'
+sh '''#!/bin/bash
+docker pull registry.fortidevsec.forticloud.com/fdevsec_dast:latest'
+docker run –rm –mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_dast:latest
+'''
               }
         }
 	    
