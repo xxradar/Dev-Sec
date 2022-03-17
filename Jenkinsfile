@@ -56,7 +56,8 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
       stage('Setting the variables values') {
            steps {
             sh '''#!/bin/bash
-                 kubectl apply -f deployment.yaml
+	        export KUBECONFIG=/home/my_jenkins_home/.kube/config
+                kubectl apply -f deployment.yaml
             '''
     }
 }
