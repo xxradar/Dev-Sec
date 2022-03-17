@@ -48,7 +48,7 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
                 steps {
                  sh '''#!/bin/bash
 	            env
-		    docker run -d "dockerfabric/helloworld:${env.BUILD_ID}"
+		    docker run -d "dockerfabric/helloworld:${BUILD_ID}"
 		    docker ps -a
                  '''
     }
