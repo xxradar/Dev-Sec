@@ -2,3 +2,21 @@ version: v1
 id:
   org: 186cf941-817e-4b71-a8f8-c2d40ef9db19
   app: 528dfd53-c203-457b-ba62-c5e6e239fc24
+
+scanners:
+- sast
+- dast
+- secret
+- sca
+
+languages:
+- python
+- javascript
+
+dast:
+url: http://localhost:5000
+fortipentest_scanner: true #true|false
+full_scan: true #true|false
+
+resource:
+serial_scan: false #true|false
