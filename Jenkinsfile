@@ -53,12 +53,12 @@ sh' docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
                 }
             }
         }        
-       stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "uniqueid")
-        }
-      }
+      stage('Setting the variables values') {
+           steps {
+            sh '''#!/bin/bash
+                 echo "hello world" 
+            '''
     }
+}
     }    
 }
